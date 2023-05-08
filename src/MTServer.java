@@ -4,22 +4,22 @@ import java.io.*;
 public class MTServer {
     public static void main(String[] args) {
         try {
-            ServerSocket ss = new ServerSocket(7777);
+            ServerSocket serverSocket = new ServerSocket(7777);
             System.out.println("Waiting for client request");
-            Socket s = ss.accept();
+            Socket socket = serverSocket.accept();
             System.out.println("New client is pop up!");
-            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            PrintStream ps = new PrintStream(s.getOutputStream());
-            String message = "";
-            while (!message.equals("exit")) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintStream printStream = new PrintStream(socket.getOutputStream());
+            String message = "null";
+            while (!message.equals("close")) {
                 System.out.print("Server: ");
                 BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
                 String response = input.readLine();
-                ps.println(response);
-                message = br.readLine();
-                System.out.println("Client: " + message);
+                printStream.println(response);
+                message = bufferedReader.readLine();
+                System.out.println("Clients: " + message);
             }
-            ss.close();
+            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
